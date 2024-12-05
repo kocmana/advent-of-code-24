@@ -20,4 +20,13 @@ class ParserTest {
         assertIterableEquals(actual, expected)
     }
 
+    @Test
+    fun readAndParseTo2dArray() {
+        val actual = Parser().readFileTo2dArray("/helper/test-matrix.txt")
+
+        assertEquals("0", actual[0][0]);
+        assertEquals("1", actual[0][1]);
+        assertEquals("a", actual[1][0]);
+    }
+
 }

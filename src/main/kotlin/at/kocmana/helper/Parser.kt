@@ -14,4 +14,9 @@ class Parser {
             .map{it.split(splitter)}
             .map{it.map(Integer::valueOf)}
             .toList()
+
+    fun readFileTo2dArray(fileName: String) =
+        readFile(fileName)
+            .map{it.chunked(1).toTypedArray()}
+            .toTypedArray()
 }
