@@ -28,19 +28,12 @@ fun getNumberOfHits(coordinate: Pair<Int, Int>, grid: Array<Array<String>>) =
         .map { direction ->
             getFieldsForDirection(coordinate, direction)
                 .filter { it.first in grid.indices && it.second in grid.indices }
-                .map { grid[it.first][it.second] }
-                .toList()
-                .joinToString("") .also { println(it) }
+                .joinToString("") { grid[it.first][it.second] }
         }
         .filter { it == "XMAS" }
         .count()
 
-private fun getFieldsForDirection(
-    start: Pair<Int, Int>,
-    direction: (Pair<Int, Int>) -> Pair<Int, Int>
-): List<Pair<Int, Int>> {
-    val sequence = generateSequence(start) { direction.invoke(it) }
-    return sequence
+private fun getFieldsForDirection(start: Pair<Int, Int>, direction: (Pair<Int, Int>) -> Pair<Int, Int>) =
+    generateSequence(start) { direction.invoke(it) }
         .take(4)
         .toList()
-}
