@@ -11,12 +11,19 @@ class Parser {
     fun readToIntLists(filename: String, splitter: String): List<List<Int>> =
         readFile(filename)
             .asSequence()
-            .map{it.split(splitter)}
-            .map{it.map(Integer::valueOf)}
+            .map { it.split(splitter) }
+            .map { it.map(Integer::valueOf) }
             .toList()
 
     fun readFileTo2dArray(fileName: String) =
         readFile(fileName)
-            .map{it.chunked(1).toTypedArray()}
+            .map { it.chunked(1).toTypedArray() }
             .toTypedArray()
 }
+
+fun transposeArray(input: Array<Array<Char>>): Array<Array<Char>> =
+    Array(input[0].size) { x ->
+        Array(input.size) { y ->
+            input[y][x]
+        }
+    }
