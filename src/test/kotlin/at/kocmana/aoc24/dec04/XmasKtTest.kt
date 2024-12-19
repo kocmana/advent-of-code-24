@@ -9,11 +9,11 @@ class XmasKtTest {
 
     @Test
     fun testGetNumberOfHits() {
-        val array = Parser().readFileTo2dArray("/helper/test-matrix.txt")
+        val array = Parser().readFileTo2dArray("/dec04/xmas-matrix.txt")
 
-        val actual = getNumberOfHits(4 to 4, array)
+        val actual = getNumberOfHits(0 to 4, array)
 
-        assertEquals(4, actual)
+        assertEquals(1, actual)
 
     }
 }
