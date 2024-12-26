@@ -6,7 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import kotlin.test.assertEquals
 
-class ResonantCollinearityKtTest {
+class ResonantCollinearity1KtTest {
     @Test
     fun extractPositions() {
         val input = Parser().readFileTo2dArrayAndTranspose("/dec08/test-input.txt")

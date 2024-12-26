@@ -4,11 +4,9 @@ import at.kocmana.helper.Parser
 import at.kocmana.helper.getPairCombinations
 
 fun main() {
-
-    val grid = Parser().readFileTo2dArray("/dec08/ResonantCollinearity.txt")
+    val grid = Parser().readFileTo2dArray("/dec08/resonant-collinearity.txt")
     println(calculateAntinodesV2(grid).size)
 }
-
 
 fun calculateAntinodesV2(grid: Array<Array<String>>) =
     extractPositions(grid).values.asSequence()
