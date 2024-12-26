@@ -19,7 +19,17 @@ class Parser {
         readFile(fileName)
             .map { it.chunked(1).toTypedArray() }
             .toTypedArray()
+
+    fun readFileTo2dArrayAndTranspose(fileName: String) =
+        transposeArray(readFileTo2dArray(fileName))
 }
+
+fun transposeArray(input: Array<Array<String>>): Array<Array<String>> =
+    Array(input[0].size) { x ->
+        Array(input.size) { y ->
+            input[y][x]
+        }
+    }
 
 fun transposeArray(input: Array<Array<Char>>): Array<Array<Char>> =
     Array(input[0].size) { x ->

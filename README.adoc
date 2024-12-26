@@ -30,7 +30,7 @@ Solutions for the https://adventofcode.com/2024/[advent of code] of 2024, this y
 |05|👍|
 |06|👍|👍
 |07|👍|👍
-|08| |
+|08|👍|👍
 |09| |
 |10| |
 |11| |
