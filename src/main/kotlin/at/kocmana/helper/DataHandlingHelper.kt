@@ -9,3 +9,16 @@ fun <T> getPairCombinations(input: List<T>): List<Pair<T, T>> {
     return combinations.toList()
 }
 
+fun <T> MutableList<T>.cutAndInsertPartialList(fromIndex: Int, length: Int, targetIndex: Int) {
+    val sublist = this.subList(fromIndex, fromIndex + length).toList()
+    this.subList(fromIndex, fromIndex + length).apply {
+        for (i in indices) this[i] = null as T
+    }
+    this.subList(targetIndex, targetIndex + length).clear()
+
+    val adjustedTargetIndex =
+        if (targetIndex > fromIndex) targetIndex - length
+        else targetIndex
+
+    this.addAll(adjustedTargetIndex, sublist)
+}
