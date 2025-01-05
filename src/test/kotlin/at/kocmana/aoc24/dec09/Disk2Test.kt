@@ -6,12 +6,12 @@ import kotlin.test.assertEquals
 class Disk2Test {
 
     @Test
-    fun test() {
+    fun creation() {
         val input = "2333133121414131402"
 
         val actualResult = Disk2(input)
 
-        assertEquals(expected = input.length/2, actual = actualResult.emptySpaces.size)
+        assertEquals(expected = 10, actual = actualResult.partitions.size)
     }
 
     @Test
