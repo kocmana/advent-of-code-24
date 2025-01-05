@@ -3,7 +3,7 @@ package at.kocmana.aoc24.dec09
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
-class DiskTest {
+class Disk1Test {
 
     @Test
     fun test() {
