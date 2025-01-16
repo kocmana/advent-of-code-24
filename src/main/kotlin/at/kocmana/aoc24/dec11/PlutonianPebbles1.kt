@@ -6,7 +6,7 @@ fun main() {
     println(solve("/dec11/plutonian-pebbles.txt"))
 }
 
-fun solve(file: String): Int {
+private fun solve(file: String): Int {
     val input = Parser().readToIntLists(file, " ").first().map { it.toLong() }
 
     return generateSequence(input) { calculateNextBlink(it) }
@@ -15,20 +15,20 @@ fun solve(file: String): Int {
         .count()
 }
 
-fun calculateNextBlink(input: List<Long>) =
+private fun calculateNextBlink(input: List<Long>) =
     input.asSequence()
         .map(::calculateNextStone)
         .flatten()
         .toList()
 
-fun calculateNextStone(currentStone: Long) =
+private fun calculateNextStone(currentStone: Long) =
     when {
         currentStone == 0L -> listOf(1L)
         currentStone.toString().length % 2 == 0 -> splitStone(currentStone)
         else -> listOf(currentStone * 2024)
     }
 
-fun splitStone(currentStone: Long): List<Long> {
+private fun splitStone(currentStone: Long): List<Long> {
     val middleIndex = currentStone.toString().length / 2
     return listOf(
         currentStone.toString().substring(0, middleIndex).toLong(),
