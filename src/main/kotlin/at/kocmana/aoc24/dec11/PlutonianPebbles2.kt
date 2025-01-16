@@ -3,10 +3,10 @@ package at.kocmana.aoc24.dec11
 import at.kocmana.helper.Parser
 
 fun main() {
-    println(solveV2("/dec11/plutonian-pebbles.txt"))
+    println(solve("/dec11/plutonian-pebbles.txt"))
 }
 
-fun solveV2(file: String): Long {
+private fun solve(file: String): Long {
     val input = Parser().readToIntLists(file, " ")
         .first()
         .map { it.toLong() }
