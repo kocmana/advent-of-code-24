@@ -11,11 +11,11 @@ val testBoard = Board("/helper/test-matrix.txt")
 class BoardTest {
     @Test
     fun findAllPositionsWhere() {
-        val actual = testBoard.findAllPositionsWhere { it == "1" }
+        val actual = testBoard.findAllPositionsWhere { it == 6 }
 
         assertSoftly {
             actual shouldHaveSize 2
-            actual shouldContainExactly listOf(testBoard.Position(1, 0), testBoard.Position(5, 4))
+            actual shouldContainExactly listOf(testBoard.Position(1, 1), testBoard.Position(4, 4))
         }
     }
 

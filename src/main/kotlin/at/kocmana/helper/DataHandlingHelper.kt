@@ -22,3 +22,9 @@ fun <T> MutableList<T>.cutAndInsertPartialList(fromIndex: Int, length: Int, targ
 
     this.addAll(adjustedTargetIndex, sublist)
 }
+
+fun parseBoardAsInt(board: Array<Array<String>>) =
+    board.map { row ->
+        row.map { it.toInt() }.toTypedArray()
+    }.toTypedArray()
+

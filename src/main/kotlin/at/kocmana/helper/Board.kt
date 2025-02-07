@@ -2,15 +2,12 @@ package at.kocmana.helper
 
 
 class Board {
-    val board: Array<Array<String>>
+    val board: Array<Array<Int>>
     val agents: MutableList<Agent> = mutableListOf()
 
     constructor(file: String) {
-        board = Parser().readFileTo2dArrayAndTranspose(file)
-    }
-
-    constructor(board: Array<Array<String>>) {
-        this.board = board
+        val stringArrays = Parser().readFileTo2dArrayAndTranspose(file)
+        board = parseBoardAsInt(stringArrays)
     }
 
     fun generateAgent(startingPosition: Position): Agent {
@@ -22,7 +19,7 @@ class Board {
         return agent
     }
 
-    fun findAllPositionsWhere(predicate: (String) -> Boolean): List<Position> {
+    fun findAllPositionsWhere(predicate: (Int) -> Boolean): List<Position> {
         val result = mutableListOf<Position>()
         board.forEachIndexed { x, row ->
             row.forEachIndexed { y, _ ->
@@ -55,14 +52,14 @@ class Board {
             if (canMoveTo(direction)) this.position = this.position andOneStepTo direction
         }
 
-        fun getApplicableDirections(predicate: (String) -> Boolean) =
+        fun getApplicableDirections(predicate: (Int) -> Boolean) =
             Direction.entries.filter {
                 this.position.getNextPositionToDirection(it)
                     ?.let { value -> predicate.invoke(value) }
                     ?: false
             }
 
-        fun moveWhereApplicable(predicate: (String) -> Boolean) {
+        fun moveWhereApplicable(predicate: (Int) -> Boolean) {
             val direction = Direction.entries.first {
                 this.position.getNextPositionToDirection(it)
                     ?.let { value -> predicate.invoke(value) }
@@ -82,7 +79,7 @@ class Board {
         fun getNextPositionToDirection(direction: Direction) =
             this@Board.getPosition(this andOneStepTo direction)
 
-        fun getApplicableDirections(predicate: (String) -> Boolean) =
+        fun getApplicableDirections(predicate: (Int) -> Boolean) =
             Direction.entries.filter {
                 getNextPositionToDirection(it)
                     ?.let { value -> predicate(value) }

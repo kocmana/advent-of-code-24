@@ -18,21 +18,22 @@ fun calculatePaths(board: Board): Int {
 }
 
 fun findStartingPoints(board: Board) =
-    board.findAllPositionsWhere { it == "0" }
+    board.findAllPositionsWhere { it == 0 }
 
 fun iterateToNextLevel(board: Board, value: Int, position: Board.Position): Set<Board.Position> {
-    val currentValue = Integer.valueOf(position.getValue())
+    val currentValue = position.getValue()
     println("Calculating for: $position with value: $value")
     if (Integer.valueOf(position.getValue()) >= maxValue) {
         println("Reached maximum value: $currentValue at $position")
         return setOf(position)
     }
 
-    val nextPositions = position.getApplicableDirections { it == value.toString() }.asSequence()
+    val nextPositions = position.getApplicableDirections { it == value }.asSequence()
         .map { position.andOneStepTo(it) }
         .toSet()
 
     if(nextPositions.isEmpty()) return emptySet()
+
     return nextPositions.asSequence()
         .flatMap { iterateToNextLevel(board, value + 1, it) }
         .toSet()
