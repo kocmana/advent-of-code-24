@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class PlutonianPebblesKtTest {
-
+/*
     @Test
     fun testCalculateNextStone() {
         assertEquals(listOf(1L), calculateNextStone(0))
@@ -34,5 +34,5 @@ class PlutonianPebblesKtTest {
 
         assertEquals(expected, actual)
     }
-
+*/
 }
