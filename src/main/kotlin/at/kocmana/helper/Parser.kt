@@ -3,7 +3,8 @@ package at.kocmana.helper
 class Parser {
 
     fun readFile(filename: String): List<String> =
-        this::class.java.getResourceAsStream(filename)!!.bufferedReader().readLines()
+        this::class.java.getResourceAsStream(filename)?.bufferedReader()?.readLines()
+            ?: throw IllegalArgumentException("File $filename not found")
 
     fun <T> readAndModify(filename: String, modifier: (String) -> T): List<T> =
         readFile(filename).map(modifier)

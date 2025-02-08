@@ -1,13 +1,15 @@
 package at.kocmana.helper
 
 
-class Board {
-    val board: Array<Array<Int>>
+class Board<T : Any> {
+    val board: List<List<T>>
     val agents: MutableList<Agent> = mutableListOf()
 
-    constructor(file: String) {
+    constructor(file: String, transformingFunction: (String) -> T) {
         val stringArrays = Parser().readFileTo2dArrayAndTranspose(file)
-        board = parseBoardAsInt(stringArrays)
+        board = stringArrays.map { row ->
+            row.map { transformingFunction(it) }.toList()
+        }.toList()
     }
 
     fun generateAgent(startingPosition: Position): Agent {
@@ -19,7 +21,7 @@ class Board {
         return agent
     }
 
-    fun findAllPositionsWhere(predicate: (Int) -> Boolean): List<Position> {
+    fun findAllPositionsWhere(predicate: (T) -> Boolean): List<Position> {
         val result = mutableListOf<Position>()
         board.forEachIndexed { x, row ->
             row.forEachIndexed { y, _ ->
@@ -34,7 +36,7 @@ class Board {
     fun isValidPosition(position: Position): Boolean =
         position.x in board.indices && position.y in board[0].indices
 
-    fun getPositionOrThrow(position: Position): Int {
+    fun getPositionOrThrow(position: Position): T {
         if (!isValidPosition(position)) {
             throw IllegalArgumentException("Invalid position $position")
         }
@@ -54,14 +56,14 @@ class Board {
             if (canMoveTo(direction)) this.position = this.position andOneStepTo direction
         }
 
-        fun getApplicableDirections(predicate: (Int) -> Boolean) =
+        fun getApplicableDirections(predicate: (T) -> Boolean) =
             Direction.entries.filter {
                 this.position.getNextPositionToDirection(it)
                     ?.let { value -> predicate.invoke(value) }
                     ?: false
             }
 
-        fun moveWhereApplicable(predicate: (Int) -> Boolean) {
+        fun moveWhereApplicable(predicate: (T) -> Boolean) {
             val direction = Direction.entries.first {
                 this.position.getNextPositionToDirection(it)
                     ?.let { value -> predicate.invoke(value) }
@@ -81,7 +83,7 @@ class Board {
         fun getNextPositionToDirection(direction: Direction) =
             this@Board.getPosition(this andOneStepTo direction)
 
-        fun getApplicableDirections(predicate: (Int) -> Boolean) =
+        fun getApplicableDirections(predicate: (T) -> Boolean) =
             Direction.entries.filter {
                 getNextPositionToDirection(it)
                     ?.let { value -> predicate(value) }
@@ -95,7 +97,7 @@ class Board {
             if (this === other) return true
             if (javaClass != other?.javaClass) return false
 
-            other as Position
+            other as Board<T>.Position
 
             if (x != other.x) return false
             if (y != other.y) return false
