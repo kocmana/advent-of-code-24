@@ -11,7 +11,7 @@ class Board {
     }
 
     fun generateAgent(startingPosition: Position): Agent {
-        if(!isValidPosition(startingPosition)) {
+        if (!isValidPosition(startingPosition)) {
             throw IllegalArgumentException("Invalid start position")
         }
         val agent = Agent(startingPosition)
@@ -23,7 +23,9 @@ class Board {
         val result = mutableListOf<Position>()
         board.forEachIndexed { x, row ->
             row.forEachIndexed { y, _ ->
-                if (predicate(board[x][y])) result.add(Position(x, y))
+                if (predicate(board[x][y])) {
+                    result.add(Position(x, y))
+                }
             }
         }
         return result
@@ -32,17 +34,17 @@ class Board {
     fun isValidPosition(position: Position): Boolean =
         position.x in board.indices && position.y in board[0].indices
 
-    fun getPositionOrThrow(position: Position) =
-        if (position.x in board.indices && position.y in board[0].indices) {
-            board[position.x][position.y]
-        } else {
+    fun getPositionOrThrow(position: Position): Int {
+        if (!isValidPosition(position)) {
             throw IllegalArgumentException("Invalid position $position")
         }
+        return board[position.x][position.y]
+    }
 
     fun getPosition(position: Position) =
-        runCatching { getPositionOrThrow(position) }.getOrNull();
+        if (isValidPosition(position)) board[position.x][position.y] else null
 
-    inner class Agent internal constructor (var position: Position) {
+    inner class Agent internal constructor(var position: Position) {
 
         infix fun canMoveTo(direction: Direction) =
             this@Board.isValidPosition(position andOneStepTo direction)

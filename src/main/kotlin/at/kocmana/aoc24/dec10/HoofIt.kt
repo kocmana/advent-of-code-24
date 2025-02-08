@@ -22,9 +22,7 @@ fun findStartingPoints(board: Board) =
 
 fun iterateToNextLevel(board: Board, value: Int, position: Board.Position): Set<Board.Position> {
     val currentValue = position.getValue()
-    println("Calculating for: $position with value: $value")
     if (Integer.valueOf(position.getValue()) >= maxValue) {
-        println("Reached maximum value: $currentValue at $position")
         return setOf(position)
     }
 
