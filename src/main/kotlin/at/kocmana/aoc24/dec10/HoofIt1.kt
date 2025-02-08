@@ -26,7 +26,7 @@ fun iterateToNextLevel(board: Board<Int>, value: Int, position: Board<Int>.Posit
     }
 
     val nextPositions = position.getApplicableDirections { it == value }.asSequence()
-        .map { position.andOneStepTo(it) }
+        .map { position andOneStepTo it }
         .toSet()
 
     if (nextPositions.isEmpty()) return emptySet()
