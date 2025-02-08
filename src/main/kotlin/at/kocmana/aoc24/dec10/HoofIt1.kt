@@ -21,8 +21,7 @@ fun calculatePaths(board: Board<Int>, startingPoints: List<Board<Int>.Position>)
         .sum()
 
 fun iterateToNextLevel(board: Board<Int>, value: Int, position: Board<Int>.Position): Set<Board<Int>.Position> {
-    val currentValue = position.getValue()
-    if (Integer.valueOf(position.getValue()) >= maxValue) {
+    if (position.getValue() >= maxValue) {
         return setOf(position)
     }
 
