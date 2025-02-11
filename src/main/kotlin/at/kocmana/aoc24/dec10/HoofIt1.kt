@@ -6,12 +6,12 @@ const val maxValue = 9
 
 fun main() {
     val board = Board("/dec10/HoofIt.txt") { it.toInt() }
-    val startingPoints = board.findStartingPoints(board)
+    val startingPoints = board.findStartingPoints()
     val result = calculatePaths(startingPoints)
     println(result)
 }
 
-fun Board<Int>.findStartingPoints(board: Board<Int>) =
+fun Board<Int>.findStartingPoints() =
     this.findAllPositionsWhere { it == 0 }
 
 fun calculatePaths(startingPoints: List<Board<Int>.Position>) =

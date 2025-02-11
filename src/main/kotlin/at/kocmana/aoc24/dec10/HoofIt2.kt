@@ -4,7 +4,7 @@ import at.kocmana.helper.Board
 
 fun main() {
     val board = Board("/dec10/HoofIt.txt") { it.toInt() }
-    val startingPoints = board.findStartingPoints(board)
+    val startingPoints = board.findStartingPoints()
     val result = calculatePathsPart2(startingPoints)
     println(result)
 }
