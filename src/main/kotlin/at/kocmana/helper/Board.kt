@@ -21,6 +21,16 @@ class Board<T : Any> {
         return agent
     }
 
+    fun getPositionsAsSequence(): Sequence<Board<T>.Position> {
+        val positions = mutableListOf<Board<T>.Position>()
+        board.forEachIndexed { i, row ->
+            row.forEachIndexed { j, col ->
+                positions.add(Position(i, j))
+            }
+        }
+        return positions.asSequence()
+    }
+
     fun findAllPositionsWhere(predicate: (T) -> Boolean): List<Position> {
         val result = mutableListOf<Position>()
         board.forEachIndexed { x, row ->
@@ -75,7 +85,7 @@ class Board<T : Any> {
 
     inner class Position(val x: Int, val y: Int) {
         fun getValue() =
-            this@Board.getPosition(this)!!
+            if(this@Board.isValidPosition(this)) this@Board.getPosition(this) else null
 
         infix fun andOneStepTo(direction: Direction) =
             Position(this.x + direction.vector.x, this.y + direction.vector.y)
@@ -90,6 +100,16 @@ class Board<T : Any> {
                     ?: false
             }
 
+        fun getNeighbouringPositions() =
+            Direction.entries.map { this.andOneStepTo(it) }
+                .filter { this@Board.isValidPosition(it) }
+                .toList()
+
+        fun getNeighboringPositionsWhere(predicate: (T) -> Boolean) =
+            this.getNeighbouringPositions()
+                .filter { predicate (it.getValue()!!) }
+                .toList()
+
         override fun toString(): String =
             "{X: $x, Y: $y, Value: ${getValue()}}"
 
@@ -97,7 +117,7 @@ class Board<T : Any> {
             if (this === other) return true
             if (javaClass != other?.javaClass) return false
 
-            other as Board<T>.Position
+            other as Board<*>.Position
 
             if (x != other.x) return false
             if (y != other.y) return false
@@ -110,6 +130,7 @@ class Board<T : Any> {
             result = 31 * result + y
             return result
         }
+
     }
 }
 
