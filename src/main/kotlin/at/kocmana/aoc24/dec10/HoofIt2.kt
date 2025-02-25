@@ -13,7 +13,7 @@ fun calculatePathsPart2(startingPoints: List<Board<Int>.Position>) =
     startingPoints.sumOf { iterateToNextLevelPart2(1, it) }
 
 fun iterateToNextLevelPart2(value: Int, position: Board<Int>.Position): Int {
-    if (position.getValue() >= maxValue) return 1
+    if (position.getValue()!! >= maxValue) return 1
 
     val nextPositions = position.getApplicableDirections { it == value }.asSequence()
         .map { position andOneStepTo it }
